@@ -1,41 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Inventario</title>
+    <title>Inventario</title>
 </head>
 <body>
-  <h1>Inventario</h1>
+    <h1>Inventario</h1>
+    <form action="Inventario.c" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre" required><br><br>
+        <label for="descripcion">Descripción:</label>
+        <input type="text" name="descripcion" id="descripcion" required><br><br>
+        <label for="tipo">Tipo:</label>
+        <input type="text" name="tipo" id="tipo" required><br><br>
+        <label for="codigo">Código:</label>
+        <input type="text" name="codigo" id="codigo" required><br><br>
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" name="cantidad" id="cantidad" required><br><br>
+        <input type="submit" value="Agregar">
+    </form>
 
-  <button onclick="runInventario()">Ejecutar Inventario</button>
-
-  <script>
-    function runInventario() {
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', 'https://raw.githubusercontent.com/ArmDelg/Sistema-inventario-PROSM/main/inventario.c', true);
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          var script = document.createElement('script');
-          script.innerHTML = xhr.responseText;
-          document.body.appendChild(script);
-          loadFunciones();
-          runMain();
-        }
-      };
-      xhr.send();
-    }
-
-    function loadFunciones() {
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', 'https://raw.githubusercontent.com/ArmDelg/Sistema-inventario-PROSM/main/funciones.h', true);
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          var script = document.createElement('script');
-          script.innerHTML = xhr.responseText;
-          document.body.appendChild(script);
-        }
-      };
-      xhr.send();
-    }
-  </script>
+    <script src="funciones.h"></script>
 </body>
 </html>
