@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inventario</title>
+</head>
+<body>
+  <h1>Inventario</h1>
+
+  <button onclick="runInventario()">Ejecutar Inventario</button>
+
+  <script>
+    function runInventario() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'https://raw.githubusercontent.com/ArmDelg/Sistema-inventario-PROSM/main/inventario.c', true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var script = document.createElement('script');
+          script.innerHTML = xhr.responseText;
+          document.body.appendChild(script);
+          loadFunciones();
+          runMain();
+        }
+      };
+      xhr.send();
+    }
+
+    function loadFunciones() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'https://raw.githubusercontent.com/ArmDelg/Sistema-inventario-PROSM/main/funciones.h', true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var script = document.createElement('script');
+          script.innerHTML = xhr.responseText;
+          document.body.appendChild(script);
+        }
+      };
+      xhr.send();
+    }
+  </script>
+</body>
+</html>
