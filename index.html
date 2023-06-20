@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Inventario</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #results {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Inventario</h1>
+
+  <label for="opcion">Seleccione una opción:</label>
+  <select id="opcion">
+    <option value="1">Agregar producto</option>
+    <option value="2">Dar salida a producto</option>
+    <option value="3">Editar producto</option>
+    <option value="4">Mostrar inventario completo</option>
+    <option value="5">Mostrar inventario por tipo</option>
+    <option value="6">Buscar producto por código</option>
+  </select>
+  <button onclick="ejecutarOpcion()">Ejecutar</button>
+
+  <div id="results"></div>
+
+  <script src="scripts.js"></script>
+  <link rel="stylesheet" href="styles.css">
+
+</body>
+</html>
