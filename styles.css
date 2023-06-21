@@ -1,109 +1,104 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #F2F2F2;
-  }
-  
-  h1 {
-    text-align: center;
-    color: #333333;
-  }
-  
-  label {
-    font-weight: bold;
-    color: #333333;
-  }
-  
-  select {
-    width: 300px;
-    height: 40px;
-    margin: 10px 0;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #CCCCCC;
-    font-size: 16px;
-    color: #000000; /* Cambio del color a negro */
-  }
-  
-  button {
-    display: block;
-    margin: 10px auto;
-    padding: 10px 20px;
-    background-color: #009688;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  #results {
-    margin-top: 20px;
-    background-color: #FFFFFF;
-    border: 1px solid #CCCCCC;
-    padding: 10px;
-  }
-  
-  ul {
-    padding-left: 20px;
-  }
-  
-  /* Colores de la empresa */
-  body {
-    color: #333333;
-  }
-  
-  h1 {
-    color: #333333;
-  }
-  
-  label {
-    color: #333333;
-  }
-  
-  select,
-  button {
-    color: #000000; /* Cambio del color a negro */
-  }
-  
-  body {
-    background-color: #F2F2F2;
-  }
-  
-  button {
-    background-color: #009688;
-  }
-  
-  #results {
-    background-color: #FFFFFF;
-    border: 1px solid #CCCCCC;
-  }
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f2f2f2;
+  color: #333333;
+}
 
-  #inventory-table {
-    margin: 30px auto;
-    border-collapse: collapse;
-    width: 80%;
-  }
-  
-  #inventory-table th,
-  #inventory-table td {
-    padding: 10px;
-    border: 1px solid #ccc;
-  }
-  
-  #inventory-table th {
-    background-color: #f2f2f2;
-  }
-  
-  #inventory-table td {
-    text-align: center;
-  }
-  
-  #inventory-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  #inventory-table tbody tr:hover {
-    background-color: #e5e5e5;
-  }
-  
+h1 {
+  text-align: center;
+  color: #333333;
+}
+
+label {
+  font-weight: bold;
+  color: #333333;
+}
+
+select {
+  width: 300px;
+  height: 40px;
+  margin: 10px 0;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+  font-size: 16px;
+  color: #000000;
+}
+
+button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background-color: #009688;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#results {
+  margin-top: 20px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  padding: 10px;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+#inventory-table {
+  margin: 30px auto;
+  border-collapse: collapse;
+  width: 80%;
+}
+
+#inventory-table th,
+#inventory-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+#inventory-table th {
+  background-color: #f2f2f2;
+}
+
+#inventory-table td {
+  text-align: center;
+}
+
+#inventory-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#inventory-table tbody tr:hover {
+  background-color: #e5e5e5;
+}
+
+/* Colores de la empresa */
+body.dark-mode {
+  color: #ffffff;
+  background-color: #333333;
+}
+
+h1.dark-mode,
+label.dark-mode,
+select.dark-mode,
+button.dark-mode,
+#results.dark-mode,
+#inventory-table.dark-mode th,
+#inventory-table.dark-mode td {
+  color: #ffffff;
+}
+
+button.dark-mode {
+  background-color: #555555;
+}
+
+#results.dark-mode,
+#inventory-table.dark-mode {
+  background-color: #555555;
+  border: 1px solid #666666;
+}
