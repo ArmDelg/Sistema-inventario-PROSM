@@ -1,0 +1,110 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f2f2f2;
+  color: #333333;
+}
+
+h1 {
+  text-align: center;
+  color: #333333;
+}
+
+label {
+  font-weight: bold;
+  color: #333333;
+}
+
+input[type="text"],
+select {
+  width: 300px;
+  height: 40px;
+  margin: 10px 0;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+  font-size: 16px;
+  color: #000000;
+}
+
+button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background-color: #009688;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#results {
+  margin-top: 20px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  padding: 10px;
+  color: #333333;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+#inventory-table {
+  margin: 30px auto;
+  border-collapse: collapse;
+  width: 80%;
+}
+
+#inventory-table th,
+#inventory-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+#inventory-table th {
+  background-color: #f2f2f2;
+}
+
+#inventory-table td {
+  text-align: center;
+}
+
+#inventory-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#inventory-table tbody tr:hover {
+  background-color: #e5e5e5;
+}
+
+/* Colores de la empresa */
+body.dark-mode {
+  color: #ffffff;
+  background-color: #333333;
+}
+
+h1.dark-mode,
+label.dark-mode,
+input[type="text"].dark-mode,
+select.dark-mode,
+button.dark-mode,
+#results.dark-mode,
+#inventory-table.dark-mode th,
+#inventory-table.dark-mode td {
+  color: #ffffff;
+}
+
+input[type="text"].dark-mode,
+select.dark-mode,
+button.dark-mode,
+#results.dark-mode,
+#inventory-table.dark-mode {
+  background-color: #555555;
+  border-color: #555555;
+}
+
+#inventory-table.dark-mode th {
+  background-color: #555555;
+}
