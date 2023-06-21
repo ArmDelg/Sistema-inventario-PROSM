@@ -15,6 +15,7 @@ label {
   color: #333333;
 }
 
+input[type="text"],
 select {
   width: 300px;
   height: 40px;
@@ -43,6 +44,7 @@ button {
   background-color: #ffffff;
   border: 1px solid #cccccc;
   padding: 10px;
+  color: #333333;
 }
 
 ul {
@@ -85,6 +87,7 @@ body.dark-mode {
 
 h1.dark-mode,
 label.dark-mode,
+input[type="text"].dark-mode,
 select.dark-mode,
 button.dark-mode,
 #results.dark-mode,
@@ -93,12 +96,15 @@ button.dark-mode,
   color: #ffffff;
 }
 
-button.dark-mode {
-  background-color: #555555;
-}
-
+input[type="text"].dark-mode,
+select.dark-mode,
+button.dark-mode,
 #results.dark-mode,
 #inventory-table.dark-mode {
   background-color: #555555;
-  border: 1px solid #666666;
+  border-color: #555555;
+}
+
+#inventory-table.dark-mode th {
+  background-color: #555555;
 }
