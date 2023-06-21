@@ -85,7 +85,7 @@ function darSalidaProducto(codigo, cantidad) {
   if (productoEncontrado) {
     if (productoEncontrado.cantidad >= cantidad) {
       productoEncontrado.cantidad -= cantidad;
-      productoEncontrado.salida += cantidad; // Registro de la salida
+      productoEncontrado.salida += cantidad; // <-- Corregido a productoEncontrado.salida
       guardarInventarioEnLocal();
       mostrarMensaje("Salida registrada correctamente.");
     } else {
@@ -202,7 +202,7 @@ function agregarCantidadProducto() {
 
   // Actualizar la cantidad y entrada del producto
   productoEncontrado.cantidad += cantidad;
-  productoEncontrado.entrada += cantidad;
+  productoEncontrado.entrada += cantidad; // <-- Corregido a productoEncontrado.entrada
 
   // Guardar el inventario actualizado en el almacenamiento local
   guardarInventarioEnLocal();
