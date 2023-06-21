@@ -19,12 +19,9 @@ function ejecutarOpcion() {
   } else if (opcion === "4") {
     mostrarInventarioCompleto();
   } else if (opcion === "5") {
-    var tipo = prompt("Ingrese el tipo de producto:");
-    mostrarInventarioPorTipo(tipo);
-  } else if (opcion === "6") {
     var codigo = prompt("Ingrese el código del producto a buscar:");
     buscarProductoPorCodigo(codigo);
-  } else if (opcion === "7") {
+  } else if (opcion === "6") {
     limpiarInventario();
   }
   else {
@@ -34,14 +31,44 @@ function ejecutarOpcion() {
 
 function agregarProducto() {
   var codigo = prompt("Ingrese el código del producto:");
-  var nombre = prompt("Ingrese el nombre del producto:");
-  var descripcion = prompt("Ingrese la descripción del producto:");
-  var cantidad = parseInt(prompt("Ingrese la cantidad del producto:"));
+  if (codigo === null) {
+    // El usuario ha cancelado, no se realiza ninguna acción
+    return;
+  }
 
-  inventario.push({ codigo: codigo, nombre: nombre, descripcion: descripcion, cantidad: cantidad });
+  var nombre = prompt("Ingrese el nombre del producto:");
+  if (nombre === null) {
+    // El usuario ha cancelado, no se realiza ninguna acción
+    return;
+  }
+
+  var descripcion = prompt("Ingrese la descripción del producto:");
+  if (descripcion === null) {
+    // El usuario ha cancelado, no se realiza ninguna acción
+    return;
+  }
+
+  var cantidad = parseInt(prompt("Ingrese la cantidad del producto:"));
+  if (isNaN(cantidad) || cantidad === null) {
+    // Si la cantidad no es un número válido o el usuario ha cancelado, no se realiza ninguna acción
+    return;
+  }
+
+  // Crear un objeto con la información del producto
+  var producto = {
+    codigo: codigo,
+    nombre: nombre,
+    descripcion: descripcion,
+    cantidad: cantidad,
+  };
+
+  // Agregar el producto al inventario
+  inventario.push(producto);
+
+  // Guardar el inventario actualizado en el almacenamiento local
   guardarInventarioEnLocal();
+
   mostrarMensaje("Producto agregado correctamente.");
-  mostrarInventario();
 }
 
 function darSalidaProducto(codigo, cantidad) {
