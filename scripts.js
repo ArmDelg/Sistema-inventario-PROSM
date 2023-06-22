@@ -267,29 +267,12 @@ function imprimirTabla() {
 }
 
 function generarPDF() {
-  // Crear un nuevo objeto jsPDF
-  var doc = new jsPDF();
+  var table = document.getElementById("inventory-table");
 
-  // Obtener la tabla del inventario
-  var tabla = document.getElementById("inventory-table");
-
-  // Obtener el ancho y alto de la tabla
-  var tablaWidth = tabla.offsetWidth;
-  var tablaHeight = tabla.offsetHeight;
-
-  // Definir la posición inicial de dibujo en el PDF
-  var xPos = 10;
-  var yPos = 10;
-
-  // Convertir la tabla en una imagen base64
-  html2canvas(tabla).then(function(canvas) {
-    // Obtener la imagen base64 de la tabla
+  html2canvas(table).then(function(canvas) {
     var imgData = canvas.toDataURL("image/png");
-
-    // Agregar la imagen al PDF
-    doc.addImage(imgData, "PNG", xPos, yPos, tablaWidth, tablaHeight);
-
-    // Guardar el PDF
-    doc.save("tabla_inventario.pdf");
+    var pdf = new jsPDF();
+    pdf.addImage(imgData, "PNG", 10, 10);
+    pdf.save("inventory.pdf");
   });
 }
