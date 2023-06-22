@@ -111,29 +111,3 @@ button.dark-mode,
 #inventory-table.dark-mode th {
   background-color: #555555;
 }
-
-@media print {
-  #inventory-table {
-    margin: 0 auto; /* Centrar la tabla en la página impresa */
-    width: 100%; /* Asegurar que la tabla ocupe todo el ancho disponible */
-    border-collapse: collapse; /* Colapsar los bordes de las celdas */
-  }
-
-  #inventory-table th,
-  #inventory-table td {
-    padding: 8px;
-    border: 1px solid #ccc;
-  }
-
-  #inventory-table th {
-    background-color: #f2f2f2;
-  }
-
-  #inventory-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-
-  #inventory-table tbody tr:hover {
-    background-color: #e5e5e5;
-  }
-}
