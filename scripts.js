@@ -9,28 +9,28 @@ function ejecutarOpcion() {
   if (opcion === "1") {
     agregarProducto();
   } else if (opcion === "2") {
-    var codigo = prompt("Ingrese el código del producto:");
-    var cantidad = parseInt(prompt("Ingrese la cantidad a dar salida:"));
-    darSalidaProducto(codigo, cantidad);
-  } else if (opcion === "3") {
     var codigo = prompt("Ingrese el código del producto a editar:");
     var nuevoNombre = prompt("Ingrese el nuevo nombre del producto:");
     var nuevaDescripcion = prompt("Ingrese la nueva descripción del producto:");
     var nuevaCantidad = parseInt(prompt("Ingrese la nueva cantidad del producto:"));
     editarProducto(codigo, nuevoNombre, nuevaDescripcion, nuevaCantidad);
+  } else if (opcion === "3") {
+    var codigo = prompt("Ingrese el código del producto:");
+    var cantidad = parseInt(prompt("Ingrese la cantidad a dar salida:"));
+    darSalidaProducto(codigo, cantidad);
   } else if (opcion === "4") {
-    mostrarInventarioCompleto();
+    agregarCantidadProducto();
   } else if (opcion === "5") {
     var codigo = prompt("Ingrese el código del producto a buscar:");
     buscarProductoPorCodigo(codigo);
   } else if (opcion === "6") {
-    limpiarInventario();
+    mostrarInventarioCompleto();
   } else if (opcion === "7") {
-    agregarCantidadProducto();
-  } else if (opcion === "8") {
     imprimirTabla();
-  }  else if (opcion === "9") {
-    descargarTablaPDF();
+  } else if (opcion === "8") {
+    generarPDF();
+  } else if (opcion === "9") {
+    limpiarInventario();
   } else {
     resultsDiv.innerHTML = "Seleccione una opción válida.";
   }
@@ -248,29 +248,36 @@ function limpiarInventario() {
   } else {
     mostrarMensaje("Contraseña incorrecta. No se pudo limpiar el inventario.");
   }
+  mostrarInventarioCompleto();
 }
 function imprimirTabla() {
   window.print();
 }
 
-function descargarTablaPDF() {
-  // Crear el objeto jsPDF
+function generarPDF() {
+  // Crear un nuevo objeto jsPDF
   var doc = new jsPDF();
 
-  // Obtener la tabla y su contenido en formato HTML
-  var table = document.getElementById("inventory-table");
-  var tableHTML = table.outerHTML;
+  // Obtener la tabla del inventario
+  var tabla = document.getElementById("inventory-table");
 
-  // Configurar la ubicación y el nombre del archivo
-  var fileName = "inventario.pdf";
+  // Obtener el ancho y alto de la tabla
+  var tablaWidth = tabla.offsetWidth;
+  var tablaHeight = tabla.offsetHeight;
 
-  // Generar el PDF a partir del HTML de la tabla
-  doc.html(tableHTML, {
-    callback: function () {
-      // Descargar el archivo PDF
-      doc.save(fileName);
-    },
-    x: 10,
-    y: 10
+  // Definir la posición inicial de dibujo en el PDF
+  var xPos = 10;
+  var yPos = 10;
+
+  // Convertir la tabla en una imagen base64
+  html2canvas(tabla).then(function(canvas) {
+    // Obtener la imagen base64 de la tabla
+    var imgData = canvas.toDataURL("image/png");
+
+    // Agregar la imagen al PDF
+    doc.addImage(imgData, "PNG", xPos, yPos, tablaWidth, tablaHeight);
+
+    // Guardar el PDF
+    doc.save("tabla_inventario.pdf");
   });
 }
