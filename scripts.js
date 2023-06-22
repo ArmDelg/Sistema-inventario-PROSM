@@ -82,16 +82,27 @@ function agregarProducto() {
 
 function darSalidaProducto(codigo, cantidad) {
   var productoEncontrado = buscarProductoPorCodigo(codigo);
+
   if (productoEncontrado) {
+    if (isNaN(cantidad)) {
+      mostrarMensaje("La cantidad de salida debe ser un número válido.");
+      return;
+    }
+
+    cantidad = parseInt(cantidad);
+
     if (productoEncontrado.cantidad >= cantidad) {
       productoEncontrado.cantidad -= cantidad;
-      productoEncontrado.salida += cantidad; // <-- Corregido a productoEncontrado.salida
+      productoEncontrado.salida += cantidad;
       guardarInventarioEnLocal();
       mostrarMensaje("Salida registrada correctamente.");
     } else {
       mostrarMensaje("No hay suficiente cantidad del producto.");
     }
+  } else {
+    mostrarMensaje("El código del producto no existe.");
   }
+
   mostrarInventarioCompleto();
 }
 
