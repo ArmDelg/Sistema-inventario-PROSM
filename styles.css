@@ -132,3 +132,11 @@ button.dark-mode,
     padding: 6px;
   }
 }
+
+/* Estilos para ocultar el menú y el botón de ejecutar al imprimir */
+@media print {
+  .menu,
+  .execute-button {
+    display: none !important;
+  }
+}
