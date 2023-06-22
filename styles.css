@@ -133,10 +133,10 @@ button.dark-mode,
   }
 }
 
-/* Estilos para ocultar el menú y el botón de ejecutar al imprimir */
-@media print {
+@media (max-width: 700px) {
   .menu,
-  .execute-button {
+  .execute-button,
+  #results {
     display: none !important;
   }
 }
