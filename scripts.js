@@ -251,7 +251,19 @@ function limpiarInventario() {
   mostrarInventarioCompleto();
 }
 function imprimirTabla() {
+  var menuDiv = document.getElementById("menu");
+  var resultsDiv = document.getElementById("results");
+
+  // Ocultar el menú y los resultados
+  menuDiv.style.display = "none";
+  resultsDiv.style.display = "none";
+
+  // Imprimir la página actual
   window.print();
+
+  // Restaurar la visibilidad del menú y los resultados
+  menuDiv.style.display = "block";
+  resultsDiv.style.display = "block";
 }
 
 function generarPDF() {
