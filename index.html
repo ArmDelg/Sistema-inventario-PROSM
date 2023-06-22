@@ -16,7 +16,7 @@
       <option value="5">Buscar producto por código</option>
       <option value="6">Mostrar inventario completo</option>
       <option value="7">Imprimir tabla</option>
-      <option value="8">Descargar PDF</option>
+      <option value="8">Generar PDF</option>
       <option value="9">Limpiar Inventario</option>
     </select>
     <button onclick="ejecutarOpcion()">Ejecutar</button>
@@ -37,8 +37,8 @@
     <tbody id="inventory-body"></tbody>
   </table>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script src="scripts.js"></script>
-  <script src="jspdf.min.js"></script>
-
 </body>
 </html>
