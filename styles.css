@@ -18,7 +18,7 @@ label {
 
 input[type="text"],
 select {
-  width: 300px;
+  width: 100%;
   height: 40px;
   margin: 10px 0;
   padding: 5px;
@@ -114,4 +114,21 @@ button.dark-mode,
 
 #inventory-table.dark-mode th {
   background-color: #555555;
+}
+
+/* Estilos específicos para pantallas más pequeñas */
+@media (max-width: 600px) {
+  input[type="text"],
+  select {
+    width: 100%;
+  }
+
+  #inventory-table {
+    font-size: 12px;
+  }
+
+  #inventory-table th,
+  #inventory-table td {
+    padding: 6px;
+  }
 }
