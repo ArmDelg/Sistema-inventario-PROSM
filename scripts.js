@@ -10,10 +10,11 @@ function ejecutarOpcion() {
     agregarProducto();
   } else if (opcion === "2") {
     var codigo = prompt("Ingrese el código del producto a editar:");
-    var nuevoNombre = prompt("Ingrese el nuevo nombre del producto:");
-    var nuevaDescripcion = prompt("Ingrese la nueva descripción del producto:");
-    var nuevaCantidad = parseInt(prompt("Ingrese la nueva cantidad del producto:"));
-    editarProducto(codigo, nuevoNombre, nuevaDescripcion, nuevaCantidad);
+var nuevoCodigo = prompt("Ingrese el nuevo código del producto:");
+var nuevoNombre = prompt("Ingrese el nuevo nombre del producto:");
+var nuevaDescripcion = prompt("Ingrese la nueva descripción del producto:");
+var nuevaCantidad = parseInt(prompt("Ingrese la nueva cantidad del producto:"));
+editarProducto(codigo, nuevoCodigo, nuevoNombre, nuevaDescripcion, nuevaCantidad);
   } else if (opcion === "3") {
     var codigo = prompt("Ingrese el código del producto:");
     var cantidad = parseInt(prompt("Ingrese la cantidad a dar salida:"));
@@ -106,7 +107,7 @@ function darSalidaProducto(codigo, cantidad) {
   mostrarInventarioCompleto();
 }
 
-function editarProducto(codigo, nuevoNombre, nuevaDescripcion, nuevaCantidad) {
+function editarProducto(codigo, nuevoCodigo, nuevoNombre, nuevaDescripcion, nuevaCantidad) {
   var productoEncontrado = buscarProductoPorCodigo(codigo);
   if (productoEncontrado) {
     // Guardar las entradas y salidas actuales
@@ -117,7 +118,8 @@ function editarProducto(codigo, nuevoNombre, nuevaDescripcion, nuevaCantidad) {
     productoEncontrado.entradas = 0;
     productoEncontrado.salidas = 0;
 
-    // Actualizar el nombre, descripción y cantidad del producto
+    // Actualizar el código, nombre, descripción y cantidad del producto
+    productoEncontrado.codigo = nuevoCodigo;
     productoEncontrado.nombre = nuevoNombre;
     productoEncontrado.descripcion = nuevaDescripcion;
     productoEncontrado.cantidad = nuevaCantidad;
