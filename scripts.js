@@ -19,18 +19,22 @@ editarProducto(codigo, nuevoCodigo, nuevoNombre, nuevaDescripcion, nuevaCantidad
     var codigo = prompt("Ingrese el código del producto:");
     var cantidad = parseInt(prompt("Ingrese la cantidad a dar salida:"));
     darSalidaProducto(codigo, cantidad);
-  } else if (opcion === "4") {
-    agregarCantidadProducto();
+  }else if (opcion === "4") {
+    var codigo = prompt("Ingrese el código del producto a eliminar:");
+    var nombre = prompt("Ingrese el nombre del producto a eliminar:");
+    eliminarProducto(codigo, nombre);
   } else if (opcion === "5") {
+    agregarCantidadProducto();
+  } else if (opcion === "6") {
     var codigo = prompt("Ingrese el código del producto a buscar:");
     buscarProductoPorCodigo(codigo);
-  } else if (opcion === "6") {
-    mostrarInventarioCompleto();
   } else if (opcion === "7") {
-    imprimirTabla();
+    mostrarInventarioCompleto();
   } else if (opcion === "8") {
-    generarPDF();
+    imprimirTabla();
   } else if (opcion === "9") {
+    generarPDF();
+  } else if (opcion === "10") {
     limpiarInventario();
   } else {
     resultsDiv.innerHTML = "Seleccione una opción válida.";
@@ -288,4 +292,19 @@ function generarPDF() {
     pdf.addImage(imgData, "PNG", 10, 10);
     pdf.save("inventory.pdf");
   });
+}
+
+function eliminarProducto(codigo, nombre) {
+  var productoEncontrado = buscarProductoPorCodigo(codigo);
+  if (productoEncontrado && productoEncontrado.nombre === nombre) {
+    // Eliminar el producto de la tabla
+    var indiceProducto = inventario.indexOf(productoEncontrado);
+    inventario.splice(indiceProducto, 1);
+
+    guardarInventarioEnLocal();
+    mostrarMensaje("Producto eliminado correctamente.");
+    mostrarInventarioCompleto();
+  } else {
+    mostrarMensaje("No se encontró un producto con el código y nombre especificados.");
+  }
 }
