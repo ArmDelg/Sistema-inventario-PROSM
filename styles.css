@@ -1,19 +1,19 @@
 body {
   font-family: "Arial", sans-serif;
   margin: 20px;
-  background-color: #f2f2f2;
+  background-color: #f2f7f2; /* Verde claro suave */
   color: #333333;
 }
 
 h1 {
   text-align: center;
-  color: #333333;
+  color: #335533; /* Verde oscuro */
   margin-top: 0;
 }
 
 label {
   font-weight: bold;
-  color: #333333;
+  color: #335533; /* Verde oscuro */
 }
 
 input[type="text"],
@@ -23,7 +23,7 @@ select {
   margin: 10px 0;
   padding: 5px;
   border-radius: 5px;
-  border: 1px solid #cccccc;
+  border: 1px solid #c4d6c4; /* Verde claro suave */
   font-size: 16px;
   color: #333333;
 }
@@ -32,7 +32,7 @@ button {
   display: block;
   margin: 10px auto;
   padding: 10px 20px;
-  background-color: #009688;
+  background-color: #449944; /* Verde */
   color: #ffffff;
   border: none;
   border-radius: 5px;
@@ -42,8 +42,8 @@ button {
 
 #results {
   margin-top: 20px;
-  background-color: #ffffff;
-  border: 1px solid #cccccc;
+  background-color: #f7fff7; /* Verde claro suave */
+  border: 1px solid #c4d6c4; /* Verde claro suave */
   padding: 10px;
   color: #333333;
 }
@@ -61,7 +61,7 @@ ul {
 #inventory-table th,
 #inventory-table td {
   padding: 10px;
-  border: 1px solid #cccccc;
+  border: 1px solid #c4d6c4; /* Verde claro suave */
 }
 
 #inventory-table tbody tr {
@@ -69,7 +69,7 @@ ul {
 }
 
 #inventory-table th {
-  background-color: #009688;
+  background-color: #449944; /* Verde */
   color: #ffffff;
   font-weight: bold;
   text-align: center;
@@ -80,44 +80,16 @@ ul {
 }
 
 #inventory-table tbody tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #f2f7f2; /* Verde claro suave */
 }
 
 #inventory-table tbody tr:hover {
-  background-color: #e5e5e5;
+  background-color: #e1f0e1; /* Verde claro más claro al pasar el cursor */
 }
 
-/* Colores de la empresa */
-body.dark-mode {
-  color: #ffffff;
-  background-color: #333333;
-}
+/* Colores de la empresa - No se cambian */
 
-h1.dark-mode,
-label.dark-mode,
-input[type="text"].dark-mode,
-select.dark-mode,
-button.dark-mode,
-#results.dark-mode,
-#inventory-table.dark-mode th,
-#inventory-table.dark-mode td {
-  color: #ffffff;
-}
-
-input[type="text"].dark-mode,
-select.dark-mode,
-button.dark-mode,
-#results.dark-mode,
-#inventory-table.dark-mode {
-  background-color: #555555;
-  border-color: #555555;
-}
-
-#inventory-table.dark-mode th {
-  background-color: #555555;
-}
-
-/* Estilos específicos para pantallas más pequeñas */
+/* Estilos específicos para pantallas más pequeñas - No se cambian */
 @media (max-width: 600px) {
   input[type="text"],
   select {
