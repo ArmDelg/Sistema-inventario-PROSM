@@ -71,8 +71,8 @@ function agregarProducto() {
     nombre: nombre,
     descripcion: descripcion,
     cantidad: cantidad,
-    entrada: 0, // Inicializar propiedad entrada en 0
-    salida: 0, // Inicializar propiedad salida en 0
+    entradas: 0, // Inicializar propiedad entrada en 0
+    salidas: 0, // Inicializar propiedad salida en 0
   };
 
   // Agregar el producto al inventario
@@ -98,7 +98,7 @@ function darSalidaProducto(codigo, cantidad) {
 
     if (productoEncontrado.cantidad >= cantidad) {
       productoEncontrado.cantidad -= cantidad;
-      productoEncontrado.salida += cantidad;
+      productoEncontrado.salidas += cantidad;
       guardarInventarioEnLocal();
       mostrarMensaje("Salida registrada correctamente.");
     } else {
@@ -157,13 +157,13 @@ function mostrarInventarioCompleto() {
     descripcionCell.textContent = inventario[i].descripcion;
     row.appendChild(descripcionCell);
 
-    var entradaCell = document.createElement("td");
-    entradaCell.textContent = inventario[i].entrada;
-    row.appendChild(entradaCell);
+    var entradasCell = document.createElement("td");
+    entradasCell.textContent = inventario[i].entradas;
+    row.appendChild(entradasCell);
 
-    var salidaCell = document.createElement("td");
-    salidaCell.textContent = inventario[i].salida;
-    row.appendChild(salidaCell);
+    var salidasCell = document.createElement("td");
+    salidasCell.textContent = inventario[i].salidas;
+    row.appendChild(salidasCell);
 
     var cantidadCell = document.createElement("td");
     cantidadCell.textContent = inventario[i].cantidad;
@@ -219,7 +219,7 @@ function agregarCantidadProducto() {
 
   // Actualizar la cantidad y entrada del producto
   productoEncontrado.cantidad += cantidad;
-  productoEncontrado.entrada += cantidad; // <-- Corregido a productoEncontrado.entrada
+  productoEncontrado.entradas += cantidad; // <-- Corregido a productoEncontrado.entrada
 
   // Guardar el inventario actualizado en el almacenamiento local
   guardarInventarioEnLocal();
