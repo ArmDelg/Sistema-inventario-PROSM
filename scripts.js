@@ -3,7 +3,6 @@ var inventario = JSON.parse(localStorage.getItem("inventario")) || [];
 
 verificarCasillasEnBlanco();
 mostrarInventarioCompleto();
-actualizarInventario();
 
 
 function ejecutarOpcion() {
