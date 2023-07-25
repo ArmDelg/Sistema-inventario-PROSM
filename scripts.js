@@ -1,7 +1,6 @@
 // Cargar los datos del inventario desde el almacenamiento local
 var inventario = JSON.parse(localStorage.getItem("inventario")) || [];
 
-actualizarInventario();
 verificarCasillasEnBlanco();
 mostrarInventarioCompleto();
 
