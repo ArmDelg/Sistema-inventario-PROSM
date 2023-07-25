@@ -3,6 +3,7 @@ var inventario = JSON.parse(localStorage.getItem("inventario")) || [];
 
 verificarCasillasEnBlanco();
 mostrarInventarioCompleto();
+actualizarInventario();
 
 
 function ejecutarOpcion() {
@@ -326,14 +327,19 @@ function actualizarInventario() {
     // Recorremos cada producto en el inventario
     for (const producto in inventarioGuardado) {
       if (inventarioGuardado.hasOwnProperty(producto)) {
-        // Verificamos si alguna propiedad del producto es NaN o null y la corregimos si es necesario
-        const productoActualizado = {
-          ...inventarioGuardado[producto], // Mantenemos las propiedades existentes
-          // Corregimos las propiedades incorrectas o faltantes
-          propiedad1: isNaN(inventarioGuardado[producto].propiedad1) ? 0 : inventarioGuardado[producto].propiedad1,
-          propiedad2: isNaN(inventarioGuardado[producto].propiedad2) ? 0 : inventarioGuardado[producto].propiedad2,
-          // ...
-        };
+        // Copiamos el producto actual para no modificar el original directamente
+        const productoActualizado = { ...inventarioGuardado[producto] };
+
+        // Recorremos cada propiedad del producto
+        for (const propiedad in productoActualizado) {
+          if (productoActualizado.hasOwnProperty(propiedad)) {
+            // Verificamos si la propiedad es NaN y la corregimos con su valor correspondiente
+            if (isNaN(productoActualizado[propiedad])) {
+              // Mantén el valor original si es NaN
+              productoActualizado[propiedad] = inventarioGuardado[producto][propiedad];
+            }
+          }
+        }
 
         // Actualizamos el producto en el inventario con los datos corregidos o actualizados
         inventarioGuardado[producto] = productoActualizado;
@@ -346,9 +352,11 @@ function actualizarInventario() {
     mostrarMensaje("Inventario actualizado y recuperado correctamente.");
   } catch (error) {
     // Si ocurre algún error, lo manejamos aquí.
-    mostrarMensaje("Error al actualizar y recuperar el inventario:", error.message);
+    mostrarMensaje("Error al actualizar y recuperar el inventario: " + error.message);
   }
 }
+
+
 
 function verificarCasillasEnBlanco() {
   var productosEliminados = 0;
