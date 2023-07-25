@@ -1,6 +1,6 @@
 // Cargar los datos del inventario desde el almacenamiento local
 var inventario = JSON.parse(localStorage.getItem("inventario")) || [];
-
+actualizarInventario();
 verificarCasillasEnBlanco();
 mostrarInventarioCompleto();
 
@@ -93,16 +93,20 @@ function agregarProducto() {
   mostrarInventarioCompleto();
 }
 
-function darSalidaProducto(codigo, cantidad) {
+function darSalidaProducto(codigo, cantidadStr) {
   var productoEncontrado = buscarProductoPorCodigo(codigo);
 
   if (productoEncontrado) {
-    if (isNaN(cantidad)) {
+    if (cantidadStr === null) {
       mostrarMensaje("La cantidad de salida debe ser un número válido.");
       return;
     }
 
-    cantidad = parseInt(cantidad);
+    var cantidad = parseInt(cantidadStr);
+    if (isNaN(cantidad)) {
+      mostrarMensaje("La cantidad debe ser un número válido.");
+      return;
+    }
 
     if (productoEncontrado.cantidad >= cantidad) {
       productoEncontrado.cantidad -= cantidad;
@@ -219,15 +223,21 @@ function agregarCantidadProducto() {
     return;
   }
 
-  var cantidad = parseInt(prompt("Ingrese la cantidad a agregar:"));
-  if (isNaN(cantidad) || cantidad === null) {
-    // Si la cantidad no es un número válido o el usuario ha cancelado, no se realiza ninguna acción
+  var cantidadStr = prompt("Ingrese la cantidad a agregar:");
+  if (cantidadStr === null) {
+    // El usuario ha cancelado, no se realiza ninguna acción
+    return;
+  }
+
+  var cantidad = parseInt(cantidadStr);
+  if (isNaN(cantidad)) {
+    mostrarMensaje("La cantidad debe ser un número válido.");
     return;
   }
 
   // Actualizar la cantidad y entrada del producto
   productoEncontrado.cantidad += cantidad;
-  productoEncontrado.entradas += cantidad; // <-- Corregido a productoEncontrado.entrada
+  productoEncontrado.entradas += cantidad;
 
   // Guardar el inventario actualizado en el almacenamiento local
   guardarInventarioEnLocal();
@@ -320,6 +330,9 @@ function eliminarProducto(codigo, nombre) {
 // Función para actualizar y recuperar el inventario
 function actualizarInventario() {
   try {
+    // Valor predeterminado para reemplazar los campos NaN o vacíos
+    const valorPredeterminado = 0;
+
     // Obtener el inventario actual almacenado en el localStorage
     const inventarioGuardado = JSON.parse(localStorage.getItem("inventory")) || {};
 
@@ -332,10 +345,9 @@ function actualizarInventario() {
         // Recorremos cada propiedad del producto
         for (const propiedad in productoActualizado) {
           if (productoActualizado.hasOwnProperty(propiedad)) {
-            // Verificamos si la propiedad es NaN y la corregimos con su valor correspondiente
-            if (isNaN(productoActualizado[propiedad])) {
-              // Mantén el valor original si es NaN
-              productoActualizado[propiedad] = inventarioGuardado[producto][propiedad];
+            // Verificamos si la propiedad es NaN o vacía y la reemplazamos por el valor predeterminado
+            if (isNaN(productoActualizado[propiedad]) || productoActualizado[propiedad] === null || productoActualizado[propiedad] === '') {
+              productoActualizado[propiedad] = valorPredeterminado;
             }
           }
         }
@@ -354,8 +366,6 @@ function actualizarInventario() {
     mostrarMensaje("Error al actualizar y recuperar el inventario: " + error.message);
   }
 }
-
-
 
 function verificarCasillasEnBlanco() {
   var productosEliminados = 0;
