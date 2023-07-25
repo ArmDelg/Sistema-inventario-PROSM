@@ -1,6 +1,11 @@
 // Cargar los datos del inventario desde el almacenamiento local
 var inventario = JSON.parse(localStorage.getItem("inventario")) || [];
 
+actualizarInventario();
+verificarCasillasEnBlanco();
+mostrarInventarioCompleto();
+
+
 function ejecutarOpcion() {
   var opcion = document.getElementById("opcion").value;
   var resultsDiv = document.getElementById("results");
@@ -36,6 +41,10 @@ editarProducto(codigo, nuevoCodigo, nuevoNombre, nuevaDescripcion, nuevaCantidad
     generarPDF();
   } else if (opcion === "10") {
     limpiarInventario();
+  } else if (opcion === "11") {
+    guardarRespaldoInventario(); // Nueva opción para guardar respaldo del inventario
+  } else if (opcion === "12") {
+    cargarRespaldoInventario(); // Nueva opción para cargar respaldo del inventario
   } else {
     resultsDiv.innerHTML = "Seleccione una opción válida.";
   }
@@ -308,3 +317,83 @@ function eliminarProducto(codigo, nombre) {
     mostrarMensaje("No se encontró un producto con el código y nombre especificados.");
   }
 }
+
+// Función para actualizar y recuperar el inventario
+function actualizarInventario() {
+  try {
+    // Obtener el inventario actual almacenado en el localStorage
+    const inventarioGuardado = JSON.parse(localStorage.getItem("inventory")) || {};
+
+    // Recorremos cada producto en el inventario
+    for (const producto in inventarioGuardado) {
+      if (inventarioGuardado.hasOwnProperty(producto)) {
+        // Verificamos si alguna propiedad del producto es NaN o null y la corregimos si es necesario
+        const productoActualizado = {
+          ...inventarioGuardado[producto], // Mantenemos las propiedades existentes
+          // Corregimos las propiedades incorrectas o faltantes
+          propiedad1: isNaN(inventarioGuardado[producto].propiedad1) ? 0 : inventarioGuardado[producto].propiedad1,
+          propiedad2: isNaN(inventarioGuardado[producto].propiedad2) ? 0 : inventarioGuardado[producto].propiedad2,
+          // ...
+        };
+
+        // Actualizamos el producto en el inventario con los datos corregidos o actualizados
+        inventarioGuardado[producto] = productoActualizado;
+      }
+    }
+
+    // Actualizamos el inventario en el localStorage con los datos corregidos
+    localStorage.setItem("inventory", JSON.stringify(inventarioGuardado));
+
+    mostrarMensaje("Inventario actualizado y recuperado correctamente.");
+  } catch (error) {
+    // Si ocurre algún error, lo manejamos aquí.
+    mostrarMensaje("Error al actualizar y recuperar el inventario:", error.message);
+  }
+}
+
+function verificarCasillasEnBlanco() {
+  var productosEliminados = 0;
+
+  for (var i = 0; i < inventario.length; i++) {
+    var producto = inventario[i];
+
+    if (producto.codigo === "" || producto.nombre === "") {
+      inventario.splice(i, 1);
+      productosEliminados++;
+      i--; // Ajustar el índice después de eliminar un elemento
+    }
+  }
+
+  if (productosEliminados > 0) {
+    guardarInventarioEnLocal();
+    mostrarMensaje(`Se han eliminado ${productosEliminados} productos sin código o nombre.`);
+  }
+}
+
+// Función para guardar el inventario en el almacenamiento local
+function guardarRespaldoInventario() {
+  // Convierte el inventario en una cadena JSON
+  var inventarioJSON = JSON.stringify(inventario);
+  
+  // Guarda el inventario en el almacenamiento local
+  localStorage.setItem('respaldoInventario', inventarioJSON);
+  
+  mostrarMensaje('Respaldo del inventario guardado en el almacenamiento local.');
+}
+
+// Función para cargar un respaldo anterior del inventario desde el almacenamiento local
+function cargarRespaldoInventario() {
+  // Recupera el inventario del almacenamiento local
+  var inventarioJSON = localStorage.getItem('respaldoInventario');
+  
+  if (inventarioJSON) {
+    // Convierte la cadena JSON en un objeto JavaScript
+    inventario = JSON.parse(inventarioJSON);
+    
+    mostrarMensaje('Respaldo del inventario cargado desde el almacenamiento local.');
+    mostrarInventarioCompleto();
+  } else {
+    mostrarMensaje('No se encontró ningún respaldo del inventario en el almacenamiento local.');
+  }
+}
+
