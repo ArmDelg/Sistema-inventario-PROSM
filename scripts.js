@@ -1,9 +1,7 @@
 // Cargar los datos del inventario desde el almacenamiento local
 var inventario = JSON.parse(localStorage.getItem("inventario")) || [];
-actualizarInventario();
 verificarCasillasEnBlanco();
 mostrarInventarioCompleto();
-
 
 function ejecutarOpcion() {
   var opcion = document.getElementById("opcion").value;
@@ -14,11 +12,11 @@ function ejecutarOpcion() {
     agregarProducto();
   } else if (opcion === "2") {
     var codigo = prompt("Ingrese el código del producto a editar:");
-var nuevoCodigo = prompt("Ingrese el nuevo código del producto:");
-var nuevoNombre = prompt("Ingrese el nuevo nombre del producto:");
-var nuevaDescripcion = prompt("Ingrese la nueva descripción del producto:");
-var nuevaCantidad = parseInt(prompt("Ingrese la nueva cantidad del producto:"));
-editarProducto(codigo, nuevoCodigo, nuevoNombre, nuevaDescripcion, nuevaCantidad);
+    var nuevoCodigo = prompt("Ingrese el nuevo código del producto:");
+    var nuevoNombre = prompt("Ingrese el nuevo nombre del producto:");
+    var nuevaDescripcion = prompt("Ingrese la nueva descripción del producto:");
+    var nuevaCantidad = parseInt(prompt("Ingrese la nueva cantidad del producto:"));
+    editarProducto(codigo, nuevoCodigo, nuevoNombre, nuevaDescripcion, nuevaCantidad);
   } else if (opcion === "3") {
     var codigo = prompt("Ingrese el código del producto:");
     var cantidad = parseInt(prompt("Ingrese la cantidad a dar salida:"));
@@ -67,9 +65,10 @@ function agregarProducto() {
     return;
   }
 
-  var cantidad = parseInt(prompt("Ingrese la cantidad del producto:"));
-  if (isNaN(cantidad) || cantidad === null) {
-    // Si la cantidad no es un número válido o el usuario ha cancelado, no se realiza ninguna acción
+  var cantidadStr = prompt("Ingrese la cantidad del producto:");
+  var cantidad = parseInt(cantidadStr);
+  if (isNaN(cantidad) || cantidad < 0) {
+    mostrarMensaje("La cantidad debe ser un número válido y positivo.");
     return;
   }
 
@@ -79,8 +78,8 @@ function agregarProducto() {
     nombre: nombre,
     descripcion: descripcion,
     cantidad: cantidad,
-    entradas: 0, // Inicializar propiedad entrada en 0
-    salidas: 0, // Inicializar propiedad salida en 0
+    entradas: 0,
+    salidas: 0,
   };
 
   // Agregar el producto al inventario
@@ -94,17 +93,12 @@ function agregarProducto() {
 }
 
 function darSalidaProducto(codigo, cantidadStr) {
-  var productoEncontrado = buscarProductoPorCodigo(codigo);
+  var productoEncontrado = buscarPorCodigo(codigo);
 
   if (productoEncontrado) {
-    if (cantidadStr === null) {
-      mostrarMensaje("La cantidad de salida debe ser un número válido.");
-      return;
-    }
-
     var cantidad = parseInt(cantidadStr);
-    if (isNaN(cantidad)) {
-      mostrarMensaje("La cantidad debe ser un número válido.");
+    if (isNaN(cantidad) || cantidad < 0) {
+      mostrarMensaje("La cantidad debe ser un número válido y positivo.");
       return;
     }
 
@@ -123,24 +117,27 @@ function darSalidaProducto(codigo, cantidadStr) {
   mostrarInventarioCompleto();
 }
 
+
 function editarProducto(codigo, nuevoCodigo, nuevoNombre, nuevaDescripcion, nuevaCantidad) {
   var productoEncontrado = buscarProductoPorCodigo(codigo);
   if (productoEncontrado) {
-    // Guardar las entradas y salidas actuales
     var entradasActuales = productoEncontrado.entradas;
     var salidasActuales = productoEncontrado.salidas;
 
-    // Reiniciar las entradas y salidas del producto
     productoEncontrado.entradas = 0;
     productoEncontrado.salidas = 0;
 
-    // Actualizar el código, nombre, descripción y cantidad del producto
     productoEncontrado.codigo = nuevoCodigo;
     productoEncontrado.nombre = nuevoNombre;
     productoEncontrado.descripcion = nuevaDescripcion;
-    productoEncontrado.cantidad = nuevaCantidad;
 
-    // Restaurar las entradas y salidas anteriores
+    var cantidad = parseInt(nuevaCantidad);
+    if (isNaN(cantidad) || cantidad < 0) {
+      mostrarMensaje("La cantidad debe ser un número válido y positivo.");
+      return;
+    }
+    productoEncontrado.cantidad = cantidad;
+
     productoEncontrado.entradas = entradasActuales;
     productoEncontrado.salidas = salidasActuales;
 
@@ -149,6 +146,7 @@ function editarProducto(codigo, nuevoCodigo, nuevoNombre, nuevaDescripcion, nuev
     mostrarInventarioCompleto();
   }
 }
+
 
 function mostrarInventarioCompleto() {
   var inventoryBody = document.getElementById("inventory-body");
@@ -209,7 +207,6 @@ function agregarCantidadProducto() {
     return;
   }
 
-  // Buscar el producto en el inventario
   var productoEncontrado = null;
   for (var i = 0; i < inventario.length; i++) {
     if (inventario[i].codigo === codigo) {
@@ -218,28 +215,21 @@ function agregarCantidadProducto() {
     }
   }
 
-  if (productoEncontrado === null) {
+  if (!productoEncontrado) {
     mostrarMensaje("El producto no se encuentra en el inventario.");
     return;
   }
 
   var cantidadStr = prompt("Ingrese la cantidad a agregar:");
-  if (cantidadStr === null) {
-    // El usuario ha cancelado, no se realiza ninguna acción
-    return;
-  }
-
   var cantidad = parseInt(cantidadStr);
-  if (isNaN(cantidad)) {
-    mostrarMensaje("La cantidad debe ser un número válido.");
+  if (isNaN(cantidad) || cantidad < 0) {
+    mostrarMensaje("La cantidad debe ser un número válido y positivo.");
     return;
   }
 
-  // Actualizar la cantidad y entrada del producto
   productoEncontrado.cantidad += cantidad;
   productoEncontrado.entradas += cantidad;
 
-  // Guardar el inventario actualizado en el almacenamiento local
   guardarInventarioEnLocal();
 
   mostrarMensaje("Existencias agregadas correctamente.");
@@ -247,22 +237,78 @@ function agregarCantidadProducto() {
 }
 
 
+function mostrarProductosEncontrados(productos) {
+  var inventoryBody = document.getElementById("inventory-body");
+
+  inventoryBody.innerHTML = "";
+
+  for (var i = 0; i < productos.length; i++) {
+    var row = document.createElement("tr");
+
+    var codigoCell = document.createElement("td");
+    codigoCell.textContent = productos[i].codigo;
+    row.appendChild(codigoCell);
+
+    var nombreCell = document.createElement("td");
+    nombreCell.textContent = productos[i].nombre;
+    row.appendChild(nombreCell);
+
+    var descripcionCell = document.createElement("td");
+    descripcionCell.textContent = productos[i].descripcion;
+    row.appendChild(descripcionCell);
+
+    var entradasCell = document.createElement("td");
+    entradasCell.textContent = productos[i].entradas;
+    row.appendChild(entradasCell);
+
+    var salidasCell = document.createElement("td");
+    salidasCell.textContent = productos[i].salidas;
+    row.appendChild(salidasCell);
+
+    var cantidadCell = document.createElement("td");
+    cantidadCell.textContent = productos[i].cantidad;
+    row.appendChild(cantidadCell);
+
+    inventoryBody.appendChild(row);
+  }
+
+}
+
+
 function buscarProductoPorCodigo(codigo) {
-  var productoEncontrado = null;
+  var productosEncontrados = [];
+
   for (var i = 0; i < inventario.length; i++) {
-    if (inventario[i].codigo === codigo) {
-      productoEncontrado = inventario[i];
-      break;
+    if (inventario[i].codigo.toLowerCase() === codigo.toLowerCase()) {
+      productosEncontrados.push(inventario[i]);
     }
   }
-  if (productoEncontrado) {
-    mostrarMensaje("Producto encontrado:<br>" + productoEncontrado.nombre + ": " + productoEncontrado.cantidad);
+
+  if (productosEncontrados.length > 0) {
+    mostrarProductosEncontrados(productosEncontrados);
   } else {
-    mostrarMensaje("Producto no encontrado.");
+    mostrarMensaje("No se encontraron productos con el nombre especificado.");
   }
-  return productoEncontrado;
-  mostrarInventarioCompleto();
 }
+
+function buscarPorCodigo(codigo) {
+  var productoEncontrado = null;
+
+  for (var i = 0; i < inventario.length; i++) {
+    if (inventario[i].codigo.toLowerCase() === codigo.toLowerCase()) {
+      productoEncontrado = inventario[i];
+      break; // Importante: detener el bucle cuando se encuentra el producto
+    }
+  }
+
+  if (productoEncontrado) {
+    return productoEncontrado;
+  } else {
+    mostrarMensaje("No se encontraron productos con el código especificado.");
+    return null;
+  }
+}
+
 
 function mostrarMensaje(mensaje) {
   var resultsDiv = document.getElementById("results");
@@ -327,45 +373,6 @@ function eliminarProducto(codigo, nombre) {
   }
 }
 
-// Función para actualizar y recuperar el inventario
-function actualizarInventario() {
-  try {
-    // Valor predeterminado para reemplazar los campos NaN o vacíos
-    const valorPredeterminado = 0;
-
-    // Obtener el inventario actual almacenado en el localStorage
-    const inventarioGuardado = JSON.parse(localStorage.getItem("inventory")) || {};
-
-    // Recorremos cada producto en el inventario
-    for (const producto in inventarioGuardado) {
-      if (inventarioGuardado.hasOwnProperty(producto)) {
-        // Copiamos el producto actual para no modificar el original directamente
-        const productoActualizado = { ...inventarioGuardado[producto] };
-
-        // Recorremos cada propiedad del producto
-        for (const propiedad in productoActualizado) {
-          if (productoActualizado.hasOwnProperty(propiedad)) {
-            // Verificamos si la propiedad es NaN o vacía y la reemplazamos por el valor predeterminado
-            if (isNaN(productoActualizado[propiedad]) || productoActualizado[propiedad] === null || productoActualizado[propiedad] === '') {
-              productoActualizado[propiedad] = valorPredeterminado;
-            }
-          }
-        }
-
-        // Actualizamos el producto en el inventario con los datos corregidos o actualizados
-        inventarioGuardado[producto] = productoActualizado;
-      }
-    }
-
-    // Actualizamos el inventario en el localStorage con los datos corregidos
-    localStorage.setItem("inventory", JSON.stringify(inventarioGuardado));
-
-    mostrarMensaje("Inventario actualizado y recuperado correctamente.");
-  } catch (error) {
-    // Si ocurre algún error, lo manejamos aquí.
-    mostrarMensaje("Error al actualizar y recuperar el inventario: " + error.message);
-  }
-}
 
 function verificarCasillasEnBlanco() {
   var productosEliminados = 0;
